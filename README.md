@@ -39,7 +39,7 @@ The project follows a standard Flutter structure:
   - **`screens/`**: Screen implementations (`weather_screen.dart`, `splash_screen.dart`, etc.).
   - **`services/`**: Backend services (`weather_provider.dart`, `api_service.dart`, etc.).
   - **`theme/`**: Custom themes and styles (`theme.dart`).
-  - **`config.dart`**: Configuration file for API keys and other constants.
+  - **`widgets/`**: Widgets used (`current_weather_display.dart`,`hourly_forecast.dart`, etc)
 - **`assets/`**: Contains static files like images and fonts.
 
 ## Dependencies
