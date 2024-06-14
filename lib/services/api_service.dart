@@ -11,7 +11,7 @@ class WeatherService {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> weatherData = json.decode(response.body);
-      print('Weather Data: $weatherData'); // Print data to console
+      print('Weather Data: $weatherData'); 
       return weatherData;
     } else {
       throw Exception('Failed to load weather data: ${response.statusCode}');

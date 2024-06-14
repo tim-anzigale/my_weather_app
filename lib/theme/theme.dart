@@ -1,10 +1,10 @@
 // theme.dart
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import for SystemUiOverlayStyle
+import 'package:flutter/services.dart'; 
 
 final customTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
     foregroundColor: Colors.black,
     elevation: 0,
@@ -22,14 +22,14 @@ final customTheme = ThemeData(
 class GradientCard extends StatelessWidget {
   final Widget child;
 
-  const GradientCard({required this.child});
+  const GradientCard({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [
             Color(0xFF64B5F6), // Start color - sky blue
             Color(0xFF42A5F5), // End color - lighter blue
@@ -39,9 +39,9 @@ class GradientCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Color(0xFF64B5F6).withOpacity(0.4),
+            color: const Color(0xFF64B5F6).withOpacity(0.4),
             blurRadius: 8,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),

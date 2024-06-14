@@ -4,21 +4,21 @@ import 'package:intl/intl.dart';
 class DailyForecast extends StatelessWidget {
   final Map<String, dynamic> weatherData;
 
-  const DailyForecast({required this.weatherData});
+  const DailyForecast({super.key, required this.weatherData});
 
   @override
   Widget build(BuildContext context) {
     final daily = weatherData['daily'];
 
     if (daily == null || daily.isEmpty) {
-      return Center(child: Text('No daily forecast data available'));
+      return const Center(child: Text('No daily forecast data available'));
     }
 
     return Column(
       children: [
         ListView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: daily.length,
           itemBuilder: (context, index) {
             final day = daily[index];
@@ -36,7 +36,7 @@ class DailyForecast extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
                       Color(0xFF64B5F6), // Start color - sky blue
                       Color(0xFF42A5F5), // End color - lighter blue
@@ -55,22 +55,22 @@ class DailyForecast extends StatelessWidget {
                         width: 50,
                         height: 50,
                       ),
-                      SizedBox(width: 16.0),
+                      const SizedBox(width: 16.0),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             dayOfWeek,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
                           ),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           Text(
                             'High: $tempMax°C, Low: $tempMin°C',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               color: Colors.white,
                             ),

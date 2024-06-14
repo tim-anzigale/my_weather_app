@@ -7,9 +7,11 @@ import '../services/geocoding_service.dart';
 import '../widgets/current_weather_display.dart';
 import '../widgets/hourly_forecast.dart';
 import '../widgets/daily_forecast.dart';
-import '../utils/cities.dart'; // Import the cities list
+import '../utils/cities.dart'; 
 
 class WeatherScreen extends StatefulWidget {
+  const WeatherScreen({super.key});
+
   @override
   _WeatherScreenState createState() => _WeatherScreenState();
 }
@@ -45,7 +47,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         Position position = await getCurrentLocation();
         latitude = position.latitude;
         longitude = position.longitude;
-        // Set selectedCity to 'Use My Location' when fetching current location
+        
         selectedCity = 'Use My Location';
       }
 
@@ -72,7 +74,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Remove back button
+        automaticallyImplyLeading: false, 
         title: Row(
           children: [
             Expanded(
@@ -83,9 +85,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     child: DropdownButton<String>(
                       isExpanded: false,
                       value: selectedCity,
-                      hint: Text('Select a City'),
+                      hint: const Text('Select a City'),
                       items: [
-                        DropdownMenuItem<String>(
+                        const DropdownMenuItem<String>(
                           value: 'Use My Location',
                           child: Text('My Location'),
                         ),
@@ -108,14 +110,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
               ),
             ),
             IconButton(
-              icon: Icon(Icons.location_on),
+              icon: const Icon(Icons.location_on),
               onPressed: () => _loadWeather(),
             ),
           ],
         ),
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : errorMessage != null
               ? Center(child: Text(errorMessage!))
               : weatherData != null
@@ -128,14 +130,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             cityName: cityName,
                             onRefresh: () => _loadWeather(city: selectedCity),
                           ),
-                          SizedBox(height: 16.0),
+                          const SizedBox(height: 16.0),
                           HourlyForecast(weatherData: weatherData),
-                          SizedBox(height: 16.0),
+                          const SizedBox(height: 16.0),
                           DailyForecast(weatherData: weatherData),
                         ],
                       ),
                     )
-                  : Center(child: Text('No weather data available')),
+                  : const Center(child: Text('No weather data available')),
     );
   }
 }
