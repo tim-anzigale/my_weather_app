@@ -58,7 +58,6 @@ These dependencies are specified in `pubspec.yaml` and can be updated as needed.
 
 ## Additional Notes
 
-- **Environment Configuration**: For Flutter Web, API keys and configurations are managed directly in the Dart code (`config.dart`). Ensure sensitive information is handled securely.
 - **Testing**: The app includes basic unit tests (`flutter_test`), which can be expanded for more comprehensive testing.
 - **Deployment**: Follow Flutter's guidelines for building and deploying to different platforms (web, iOS, Android).
 
