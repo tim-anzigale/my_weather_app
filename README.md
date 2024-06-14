@@ -1,5 +1,3 @@
-Certainly! Here's a clear documentation template for your Flutter weather app project:
-
 ---
 
 # Weather App Documentation
