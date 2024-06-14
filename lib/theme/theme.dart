@@ -1,25 +1,24 @@
+// theme.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import for SystemUiOverlayStyle
 
-// Define your custom theme
-final ThemeData customTheme = ThemeData(
-  scaffoldBackgroundColor: Colors.white, // White scaffold background
+final customTheme = ThemeData(
+  scaffoldBackgroundColor: Colors.white,
   appBarTheme: AppBarTheme(
-    backgroundColor: Colors.transparent, // Transparent app bar background color
-    foregroundColor: Colors.grey[800], // Text color
-    elevation: 0, // No shadow
-    iconTheme: IconThemeData(color: Colors.grey[800]), // Icon color
+    backgroundColor: Colors.transparent,
+    foregroundColor: Colors.black,
+    elevation: 0,
+    iconTheme: IconThemeData(color: Colors.black),
     titleTextStyle: TextStyle(
-      color: Colors.grey[800],
+      color: Colors.black,
       fontWeight: FontWeight.bold,
-      fontSize: 18, // Adjust size if necessary
+      fontSize: 18,
     ),
-    systemOverlayStyle: SystemUiOverlayStyle.dark, // Dark status bar text color
-    scrolledUnderElevation: 0, // Ensure no change in elevation when scrolled
+    systemOverlayStyle: SystemUiOverlayStyle.dark,
+    scrolledUnderElevation: 0,
   ),
 );
 
-// Define a custom Card widget with a sky blue gradient
 class GradientCard extends StatelessWidget {
   final Widget child;
 

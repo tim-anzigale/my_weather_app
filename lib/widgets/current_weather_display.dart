@@ -22,7 +22,26 @@ class CurrentWeatherDisplay extends StatelessWidget {
     final icon = weather['icon'];
     final description = weather['description'];
 
-    return GradientCard(
+    return Container(
+      margin: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFF64B5F6), // Start color - sky blue
+            Color(0xFF42A5F5), // End color - lighter blue
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Color(0xFF64B5F6).withOpacity(0.4),
+            blurRadius: 8,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -106,6 +125,7 @@ class CurrentWeatherDisplay extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(height: 4.0),
             Row(
               children: [
                 Icon(

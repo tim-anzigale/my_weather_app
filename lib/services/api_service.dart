@@ -6,7 +6,7 @@ class WeatherService {
 
   Future<Map<String, dynamic>> fetchWeather(double lat, double lon) async {
     final response = await http.get(
-      Uri.parse('https://api.openweathermap.org/data/3.0/onecall?lat=$lat&lon=$lon&exclude=minutely,hourly,alerts&appid=$apiKey&units=metric'),
+      Uri.parse('https://api.openweathermap.org/data/3.0/onecall?lat=$lat&lon=$lon&exclude=minutely,alerts&appid=$apiKey&units=metric'),
     );
 
     if (response.statusCode == 200) {

@@ -16,7 +16,6 @@ class DailyForecast extends StatelessWidget {
 
     return Column(
       children: [
-        //Text('Forecast', style: TextStyle(fontSize: 20)),
         ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
@@ -29,10 +28,59 @@ class DailyForecast extends StatelessWidget {
             final dt = DateTime.fromMillisecondsSinceEpoch(day['dt'] * 1000);
             final dayOfWeek = DateFormat('EEEE').format(dt);
 
-            return ListTile(
-              leading: Image.network('https://openweathermap.org/img/wn/$icon.png'),
-              title: Text(dayOfWeek),
-              subtitle: Text('High: $tempMax°C, Low: $tempMin°C'),
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              elevation: 5,
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF64B5F6), // Start color - sky blue
+                      Color(0xFF42A5F5), // End color - lighter blue
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      Image.network(
+                        'https://openweathermap.org/img/wn/$icon.png',
+                        width: 50,
+                        height: 50,
+                      ),
+                      SizedBox(width: 16.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            dayOfWeek,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(height: 8.0),
+                          Text(
+                            'High: $tempMax°C, Low: $tempMin°C',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           },
         ),

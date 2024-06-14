@@ -7,6 +7,7 @@ import '../services/geocoding_service.dart';
 import '../widgets/current_weather_display.dart';
 import '../widgets/hourly_forecast.dart';
 import '../widgets/daily_forecast.dart';
+import '../utils/cities.dart'; // Import the cities list
 
 class WeatherScreen extends StatefulWidget {
   @override
@@ -17,7 +18,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
   bool isLoading = true;
   String? errorMessage;
   String? cityName;
-  final GeocodingService geocodingService = GeocodingService('7aeb94610fca0886bd64cf2987e71a30'); // Replace with your actual API key
+  String? selectedCity;
+  final GeocodingService geocodingService = GeocodingService('7aeb94610fca0886bd64cf2987e71a30');
 
   @override
   void initState() {
@@ -25,17 +27,34 @@ class _WeatherScreenState extends State<WeatherScreen> {
     _loadWeather();
   }
 
-  Future<void> _loadWeather() async {
+  Future<void> _loadWeather({String? city}) async {
     setState(() {
       isLoading = true;
       errorMessage = null;
     });
 
     try {
-      Position position = await getCurrentLocation();
+      double? latitude;
+      double? longitude;
+
+      if (city != null && city != 'Use My Location') {
+        final coordinates = await geocodingService.getCoordinates(city);
+        latitude = coordinates!.lat;
+        longitude = coordinates.lon;
+      } else {
+        Position position = await getCurrentLocation();
+        latitude = position.latitude;
+        longitude = position.longitude;
+        // Set selectedCity to 'Use My Location' when fetching current location
+        selectedCity = 'Use My Location';
+      }
+
       await Provider.of<WeatherProvider>(context, listen: false)
-          .fetchWeather(position.latitude, position.longitude);
-      cityName = await geocodingService.getCityName(position.latitude, position.longitude);
+          .fetchWeather(latitude, longitude);
+
+      cityName = city != null && city != 'Use My Location'
+          ? city
+          : await geocodingService.getCityName(latitude, longitude);
     } catch (e) {
       setState(() {
         errorMessage = e.toString();
@@ -53,7 +72,47 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Weather App'),
+        automaticallyImplyLeading: false, // Remove back button
+        title: Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Center(
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      isExpanded: false,
+                      value: selectedCity,
+                      hint: Text('Select a City'),
+                      items: [
+                        DropdownMenuItem<String>(
+                          value: 'Use My Location',
+                          child: Text('My Location'),
+                        ),
+                        ...kenyanCities.map((String city) {
+                          return DropdownMenuItem<String>(
+                            value: city,
+                            child: Text(city),
+                          );
+                        }).toList(),
+                      ],
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedCity = newValue;
+                        });
+                        _loadWeather(city: newValue);
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.location_on),
+              onPressed: () => _loadWeather(),
+            ),
+          ],
+        ),
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
@@ -61,14 +120,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
               ? Center(child: Text(errorMessage!))
               : weatherData != null
                   ? SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
                       child: Column(
                         children: [
                           CurrentWeatherDisplay(
                             weatherData: weatherData,
                             cityName: cityName,
-                            onRefresh: _loadWeather,  // Pass the refresh callback
+                            onRefresh: () => _loadWeather(city: selectedCity),
                           ),
-                         // HourlyForecast(weatherData: weatherData),
+                          SizedBox(height: 16.0),
+                          HourlyForecast(weatherData: weatherData),
+                          SizedBox(height: 16.0),
                           DailyForecast(weatherData: weatherData),
                         ],
                       ),
