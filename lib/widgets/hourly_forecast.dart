@@ -16,8 +16,8 @@ class GradientCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
         gradient: const LinearGradient(
           colors: [
-            Color(0xFF64B5F6), // Start color - sky blue
-            Color(0xFF42A5F5), // End color - lighter blue
+            Color(0xFF64B5F6), 
+            Color(0xFF42A5F5), 
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,

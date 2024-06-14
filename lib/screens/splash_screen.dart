@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:weather_app/screens/weather_screen.dart'; // Import your main screen
+import 'package:weather_app/screens/weather_screen.dart'; 
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -11,8 +13,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Wait for 2 seconds and then navigate to WeatherScreen
-    Timer(const Duration(seconds: 3), () {
+        Timer(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const WeatherScreen()),
       );

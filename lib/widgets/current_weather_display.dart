@@ -28,8 +28,8 @@ class CurrentWeatherDisplay extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
         gradient: const LinearGradient(
           colors: [
-            Color(0xFF64B5F6), // Start color - sky blue
-            Color(0xFF42A5F5), // End color - lighter blue
+            Color(0xFF64B5F6), //
+            Color(0xFF42A5F5), 
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -81,7 +81,7 @@ class CurrentWeatherDisplay extends StatelessWidget {
                   'https://openweathermap.org/img/wn/$icon.png',
                   width: 50,
                   height: 50,
-                  color: Colors.white, // Ensure icon color matches card background
+                  color: Colors.white, //
                   colorBlendMode: BlendMode.srcATop,
                 ),
                 const SizedBox(width: 16.0),

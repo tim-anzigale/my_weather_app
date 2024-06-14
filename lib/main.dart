@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'screens/weather_screen.dart';
-import 'screens/splash_screen.dart'; // Import your splash screen
+import 'screens/splash_screen.dart'; 
 import 'services/weather_provider.dart';
 import 'theme/theme.dart';
 
@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => WeatherProvider()),
-        // Add more providers if needed
+        
       ],
       child: MaterialApp(
         theme: customTheme,
-        home: SplashScreen(), // Show SplashScreen initially
+        home: SplashScreen(), 
         debugShowCheckedModeBanner: false,
       ),
     );
