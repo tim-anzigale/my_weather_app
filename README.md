@@ -17,7 +17,7 @@ This document provides an overview of setting up and running the Weather App, in
 
 1. **Clone the Repository:**
    ```
-   git clone <repository-url>
+   git clone https://github.com/tim-anzigale/my_weather_app.git
    cd weather_app
    ```
 
