@@ -46,4 +46,6 @@ class WeatherController extends GetxController {
       isLoading.value = false; // Stop loading
     }
   }
+
 }
+
