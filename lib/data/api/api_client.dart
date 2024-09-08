@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/utils/environmet.dart';
 
+
+
 class ApiClient extends GetxService {
   late String baseUrl = Environment.openWeatherBaseUrl;
   late SharedPreferences sharedPreferences;
@@ -207,4 +209,6 @@ class ApiClient extends GetxService {
   String getUserToken() {
     return sharedPreferences.getString('token') ?? '';
   }
+
 }
+

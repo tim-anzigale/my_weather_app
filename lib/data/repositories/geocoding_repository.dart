@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+
 import 'package:weather_app/data/api/api_client.dart';
 import 'package:weather_app/utils/environmet.dart';
+
 
 
 class GeocodingRepository extends GetxService {
@@ -32,4 +34,7 @@ class GeocodingRepository extends GetxService {
 
     return await apiClient.getWithParamData(uri, queryParams: queryParams);
   }
+
 }
+
+

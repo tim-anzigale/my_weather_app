@@ -268,4 +268,7 @@ class WeatherAlert {
       description: json['description'],
     );
   }
+
 }
+
+

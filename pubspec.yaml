@@ -20,6 +20,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   get:
   awesome_snackbar_content:
+
   shared_preferences: ^2.1.0 
 
 dev_dependencies:

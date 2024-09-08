@@ -56,4 +56,6 @@ class GeocodingController extends GetxController {
       isLoading.value = false; // Stop loading
     }
   }
+
 }
+

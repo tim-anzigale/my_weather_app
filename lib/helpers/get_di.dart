@@ -8,6 +8,7 @@ import 'package:weather_app/data/repositories/weather_repository.dart';
 import 'package:weather_app/utils/environmet.dart';
 
 
+
 Future<void> init() async {
   // Core
   await Get.putAsync<SharedPreferences>(() => SharedPreferences.getInstance());
@@ -43,4 +44,7 @@ Future<void> init() async {
       geocodingRepository: Get.find<GeocodingRepository>(),
     ),
   );
+
 }
+
+

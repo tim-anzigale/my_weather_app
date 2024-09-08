@@ -114,4 +114,6 @@ class ServerInformation2 {
         "requestDuration": requestDuration,
         "currentTime": currentTime,
     };
+
 }
+
