@@ -5,7 +5,7 @@ class WeatherController extends GetxController {
   final WeatherRepository weatherRepository;
 
   var isLoading = false.obs;
-  var weatherData = {}.obs; // Holds the weather data response
+  var weatherData = <String, dynamic>{}.obs; // Changed to RxMap<String, dynamic>
   var errorMessage = ''.obs;
 
   WeatherController({required this.weatherRepository});
@@ -46,6 +46,4 @@ class WeatherController extends GetxController {
       isLoading.value = false; // Stop loading
     }
   }
-
 }
-

@@ -6,7 +6,7 @@ class Environment {
       dotenv.env['OPEN_WEATHER_URL'] ?? 'https://api.openweathermap.org';
 
   // API Key for accessing OpenWeather API
-  static String get weatherApiKey =>
+  static String get openWeatherApiKey =>
       dotenv.env['OPEN_WEATHER_API_KEY'] ?? 'MY_FALLBACK';
 
   // Endpoint for One Call API (Weather Data)

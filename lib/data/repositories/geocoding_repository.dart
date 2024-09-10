@@ -1,9 +1,6 @@
 import 'package:get/get.dart';
-
 import 'package:weather_app/data/api/api_client.dart';
-import 'package:weather_app/utils/environmet.dart';
-
-
+import 'package:weather_app/utils/environment.dart'; // Ensure the correct file name for the environment
 
 class GeocodingRepository extends GetxService {
   final ApiClient apiClient;
@@ -16,9 +13,10 @@ class GeocodingRepository extends GetxService {
     final Map<String, String> queryParams = {
       'q': cityName,
       'limit': '1',
-      'appid': Environment.weatherApiKey,
+      'appid': Environment.openWeatherApiKey, // Use the updated environment property name
     };
 
+    // Use the ApiClient's method to make the request
     return await apiClient.getWithParamData(uri, queryParams: queryParams);
   }
 
@@ -29,12 +27,10 @@ class GeocodingRepository extends GetxService {
       'lat': lat.toString(),
       'lon': lon.toString(),
       'limit': '1',
-      'appid': Environment.weatherApiKey,
+      'appid': Environment.openWeatherApiKey, // Use the updated environment property name
     };
 
+    // Use the ApiClient's method to make the request
     return await apiClient.getWithParamData(uri, queryParams: queryParams);
   }
-
 }
-
-

@@ -5,7 +5,7 @@ import 'package:weather_app/data/controllers/geocoding_controller.dart';
 import 'package:weather_app/data/controllers/weather_controller.dart';
 import 'package:weather_app/data/repositories/geocoding_repository.dart';
 import 'package:weather_app/data/repositories/weather_repository.dart';
-import 'package:weather_app/utils/environmet.dart';
+import 'package:weather_app/utils/environment.dart';
 
 
 

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
-import '../services/weather_provider.dart';
-import '../services/geolocator_service.dart';
-import '../services/geocoding_service.dart';
-import '../widgets/current_weather_display.dart';
-import '../widgets/hourly_forecast.dart';
-import '../widgets/daily_forecast.dart';
-import '../utils/cities.dart'; 
+import 'package:weather_app/data/controllers/geocoding_controller.dart';
+import 'package:weather_app/data/controllers/weather_controller.dart';
+import 'package:weather_app/services/geolocator_service.dart';
+import '../../widgets/current_weather_display.dart';
+import '../../widgets/hourly_forecast.dart';
+import '../../widgets/daily_forecast.dart';
+import '../../utils/cities.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
@@ -17,11 +17,11 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  bool isLoading = true;
-  String? errorMessage;
-  String? cityName;
+  final WeatherController weatherController = Get.find<WeatherController>();
+  final GeocodingController geocodingController = Get.find<GeocodingController>();
+
   String? selectedCity;
-  final GeocodingService geocodingService = GeocodingService('7aeb94610fca0886bd64cf2987e71a30');
+  String? cityName;
 
   @override
   void initState() {
@@ -30,51 +30,39 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
 
   Future<void> _loadWeather({String? city}) async {
-    setState(() {
-      isLoading = true;
-      errorMessage = null;
-    });
-
     try {
       double? latitude;
       double? longitude;
 
       if (city != null && city != 'Use My Location') {
-        final coordinates = await geocodingService.getCoordinates(city);
-        latitude = coordinates!.lat;
-        longitude = coordinates.lon;
+        await geocodingController.fetchCoordinates(city);
+        latitude = geocodingController.coordinates['lat'];
+        longitude = geocodingController.coordinates['lon'];
       } else {
         Position position = await getCurrentLocation();
         latitude = position.latitude;
         longitude = position.longitude;
-        
         selectedCity = 'Use My Location';
       }
 
-      await Provider.of<WeatherProvider>(context, listen: false)
-          .fetchWeather(latitude, longitude);
+      await weatherController.fetchWeatherData(latitude!, longitude!);
 
-      cityName = city != null && city != 'Use My Location'
-          ? city
-          : await geocodingService.getCityName(latitude, longitude);
+      if (city == null || city == 'Use My Location') {
+        await geocodingController.fetchCityName(latitude, longitude);
+        cityName = geocodingController.cityName.value;
+      } else {
+        cityName = city;
+      }
     } catch (e) {
-      setState(() {
-        errorMessage = e.toString();
-      });
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
+      weatherController.errorMessage.value = e.toString();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final weatherData = Provider.of<WeatherProvider>(context).weatherData;
-
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, 
+        automaticallyImplyLeading: false,
         title: Row(
           children: [
             Expanded(
@@ -116,28 +104,32 @@ class _WeatherScreenState extends State<WeatherScreen> {
           ],
         ),
       ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : errorMessage != null
-              ? Center(child: Text(errorMessage!))
-              : weatherData != null
-                  ? SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-                      child: Column(
-                        children: [
-                          CurrentWeatherDisplay(
-                            weatherData: weatherData,
-                            cityName: cityName,
-                            onRefresh: () => _loadWeather(city: selectedCity),
-                          ),
-                          const SizedBox(height: 10.0),
-                          HourlyForecast(weatherData: weatherData),
-                          const SizedBox(height: 10.0),
-                          DailyForecast(weatherData: weatherData),
-                        ],
-                      ),
-                    )
-                  : const Center(child: Text('No weather data available')),
+      body: Obx(() {
+        if (weatherController.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (weatherController.errorMessage.value.isNotEmpty) {
+          return Center(child: Text(weatherController.errorMessage.value));
+        } else if (weatherController.weatherData.isNotEmpty) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+            child: Column(
+              children: [
+                CurrentWeatherDisplay(
+                  weatherData: weatherController.weatherData,
+                  cityName: cityName,
+                  onRefresh: () => _loadWeather(city: selectedCity),
+                ),
+                const SizedBox(height: 10.0),
+                HourlyForecast(weatherData: weatherController.weatherData),
+                const SizedBox(height: 10.0),
+                DailyForecast(weatherData: weatherController.weatherData),
+              ],
+            ),
+          );
+        } else {
+          return const Center(child: Text('No weather data available'));
+        }
+      }),
     );
   }
 }
