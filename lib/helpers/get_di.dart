@@ -7,44 +7,19 @@ import 'package:weather_app/data/repositories/geocoding_repository.dart';
 import 'package:weather_app/data/repositories/weather_repository.dart';
 import 'package:weather_app/utils/environment.dart';
 
-
-
 Future<void> init() async {
   // Core
-  await Get.putAsync<SharedPreferences>(() => SharedPreferences.getInstance());
-  Get.lazyPut<ApiClient>(
-    () => ApiClient(
+  Get.putAsync(() => SharedPreferences.getInstance());
+  Get.lazyPut(() => ApiClient(
       baseUrl: Environment.openWeatherBaseUrl,
-      sharedPreferences: Get.find<SharedPreferences>(),
-    ),
-  );
+        sharedPreferences: Get.find(),
+      ));
 
   // Repositories
-  Get.lazyPut<WeatherRepository>(
-    () => WeatherRepository(
-      apiClient: Get.find<ApiClient>(),
-    ),
-  );
-
-  Get.lazyPut<GeocodingRepository>(
-    () => GeocodingRepository(
-      apiClient: Get.find<ApiClient>(),
-    ),
-  );
+  Get.lazyPut(() => WeatherRepository(apiClient: Get.find()));
+  Get.lazyPut(() => GeocodingRepository(apiClient: Get.find()));
 
   // Controllers
-  Get.lazyPut<WeatherController>(
-    () => WeatherController(
-      weatherRepository: Get.find<WeatherRepository>(),
-    ),
-  );
-
-  Get.lazyPut<GeocodingController>(
-    () => GeocodingController(
-      geocodingRepository: Get.find<GeocodingRepository>(),
-    ),
-  );
-
+  Get.lazyPut(() => WeatherController(weatherRepository: Get.find()));
+  Get.lazyPut(() => GeocodingController(geocodingRepository: Get.find()));
 }
-
-

@@ -48,7 +48,7 @@ class CurrentWeatherDisplay extends StatelessWidget {
                     ),
                   ),
                 IconButton(
-                  icon: const Icon(Icons.refresh, color: Colors.white),
+                  icon: const Icon(Icons.refresh, color: Color.fromARGB(255, 109, 57, 57)),
                   onPressed: onRefresh,
                 ),
               ],
