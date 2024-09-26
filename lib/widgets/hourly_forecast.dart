@@ -1,4 +1,7 @@
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:2374414760.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:2135619842.
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/widgets/glassmorphism.dart';
 
 class HourlyForecast extends StatelessWidget {
@@ -18,17 +21,17 @@ class HourlyForecast extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: hourly.map<Widget>((hour) {
-          final temp = hour['temp'];
+          final temp = hour['temp'].toInt();
           final humidity = hour['humidity'];
-          final windSpeed = hour['wind_speed'];
+          final windSpeed = hour['wind_speed'].toStringAsFixed(1);
           final icon = hour['weather'][0]['icon'];
           final dt = DateTime.fromMillisecondsSinceEpoch(hour['dt'] * 1000);
-          final time = TimeOfDay.fromDateTime(dt);
+          final time = DateFormat('HH:mm').format(dt);
 
           return GlassMorphism(
             blur: 20.0,
             opacity: 0.1,
-            color: Color.fromARGB(255, 91, 49, 49),
+            color: const Color.fromARGB(255, 91, 49, 49),
             borderRadius: BorderRadius.circular(12.0),
             child: Container(
               width: 140,
@@ -39,7 +42,7 @@ class HourlyForecast extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    '${time.format(context)}',
+                    time,
                     style: const TextStyle(color: Color.fromARGB(255, 84, 77, 77), fontSize: 16.0),
                   ),
                   const SizedBox(height: 8.0),

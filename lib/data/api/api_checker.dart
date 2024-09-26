@@ -1,58 +1,68 @@
-import 'package:flutter/material.dart';
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:257204092.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:662451162.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:1137005783.
+import 'dart:io';
+
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/material.dart';
 
 class ApiChecker {
+  static const String unauthorizedTitle = 'Unauthorized';
+  static const String unauthorizedMessage = 'Invalid API key. Please check your credentials.';
+  static const String forbiddenTitle = 'Forbidden';
+  static const String forbiddenMessage = 'Access to the weather data is forbidden.';
+  static const String locationNotFoundTitle = 'Location Not Found';
+  static const String locationNotFoundMessage = 'Please try a different city.';
+  static const String serverErrorTitle = 'Server Error';
+  static const String serverErrorMessage = 'Please try again later.';
+  static const String serviceUnavailableTitle = 'Service Unavailable';
+  static const String serviceUnavailableMessage = 'Weather service is currently unavailable. Try again later.';
+  static const String errorTitle = 'Error';
+
+
   static void checkApiResponse(BuildContext context, {required int statusCode, required String message}) {
+    if (statusCode != 200) {
+      String title;
+      String msg;
+      ContentType contentType;
+
     switch (statusCode) {
-      case 200: // Success
-        // No action needed for a successful response
+        case 401:
+          title = unauthorizedTitle;
+          msg = unauthorizedMessage;
+          contentType = ContentType.failure;
         break;
-      case 401: // Unauthorized
+        case 403:
+          title = forbiddenTitle;
+          msg = forbiddenMessage;
+          contentType = ContentType.warning;
+        break;
+        case 404:
+          title = locationNotFoundTitle;
+          msg = locationNotFoundMessage;
+          contentType = ContentType.warning;
+        break;
+        case 500:
+          title = serverErrorTitle;
+          msg = serverErrorMessage;
+          contentType = ContentType.failure;
+        break;
+        case 503:
+          title = serviceUnavailableTitle;
+          msg = serviceUnavailableMessage;
+          contentType = ContentType.warning;
+        break;
+        default:
+          title = errorTitle;
+          msg = 'An unexpected error occurred. Status code: $statusCode';
+          contentType = ContentType.help;
+      }
+
         _showAwesomeSnackBar(
           context: context,
-          title: 'Unauthorized',
-          message: 'Invalid API key. Please check your credentials.',
-          contentType: ContentType.failure,
-        );
-        break;
-      case 403: // Forbidden
-        _showAwesomeSnackBar(
-          context: context,
-          title: 'Forbidden',
-          message: 'Access to the weather data is forbidden.',
-          contentType: ContentType.warning,
-        );
-        break;
-      case 404: // Not Found
-        _showAwesomeSnackBar(
-          context: context,
-          title: 'Location Not Found',
-          message: 'Please try a different city.',
-          contentType: ContentType.warning,
-        );
-        break;
-      case 500: // Server Error
-        _showAwesomeSnackBar(
-          context: context,
-          title: 'Server Error',
-          message: 'Please try again later.',
-          contentType: ContentType.failure,
-        );
-        break;
-      case 503: // Service Unavailable
-        _showAwesomeSnackBar(
-          context: context,
-          title: 'Service Unavailable',
-          message: 'Weather service is currently unavailable. Try again later.',
-          contentType: ContentType.warning,
-        );
-        break;
-      default: // Other errors
-        _showAwesomeSnackBar(
-          context: context,
-          title: 'Error',
-          message: 'An unexpected error occurred. Status code: $statusCode',
-          contentType: ContentType.help,
+        title: title,
+        message: msg,
+        contentType: contentType,
         );
     }
   }
@@ -70,7 +80,7 @@ class ApiChecker {
       content: AwesomeSnackbarContent(
         title: title,
         message: message,
-        color: Colors.blueAccent, // Customize the color of the snackbar
+        color: Colors.blueAccent,
         contentType: contentType,
       ),
     );
@@ -79,4 +89,4 @@ class ApiChecker {
       ..hideCurrentSnackBar()
       ..showSnackBar(snackBar);
   }
-}
+  }

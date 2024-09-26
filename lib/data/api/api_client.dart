@@ -8,94 +8,92 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/data/api/api_handler.dart';
 import 'package:weather_app/utils/environment.dart'; // Ensure the correct import path
 
-
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:161448088.
 class ApiClient extends GetxService {
+  static const String contentType = 'Content-Type';
+  static const String applicationJson = 'application/json';
+  static const String authorization = 'Authorization';
+  static const String bearer = 'Bearer';
+  static const String tokenKey = 'token';
+  static const int timeoutInSeconds = 30;
+  static const String noInternetConnection = 'No internet connection';
+  static const String unexpectedError = 'An unexpected error occurred';
+  static const String operationTimedOut = 'The operation timed out';
+
   late String baseUrl;
   late SharedPreferences sharedPreferences;
-  final int timeoutInSeconds = 30;
 
-  String token = '';
+  String? token;
   late Map<String, String> _mainHeaders;
-  RxBool loadingLogin = false.obs;
 
-  ApiClient({
-    required this.baseUrl,
-    required this.sharedPreferences,
-  }) {
-    // Initialize the base URL correctly
+  ApiClient({required this.baseUrl, required this.sharedPreferences}) {
     baseUrl = Environment.openWeatherBaseUrl;
-
-    // Remove any trailing slashes from baseUrl to avoid malformed URL issues
     if (baseUrl.endsWith('/')) {
       baseUrl = baseUrl.substring(0, baseUrl.length - 1);
     }
-
-    // Initialize headers with user token
     _mainHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${getUserToken()}',
+      contentType: applicationJson,
+      authorization: '$bearer ${getUserToken()}'
     };
   }
 
-  void updateHeader(String token) {
+  void updateHeader(String? token) {
     _mainHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
+      contentType: applicationJson,
+      authorization: '$bearer $token'
     };
   }
 
-  void updateToken(String token) {
+  void updateToken(String? token) {
     this.token = token;
     updateHeader(token);
   }
 
-  // GET request with parameters
   Future<Response> getWithParamData(
     String uri, {
     required Map<String, String> queryParams,
   }) async {
     try {
-      debugPrint('====> API Call: $uri\nHeader: $_mainHeaders\nParams: $queryParams');
-
-      // Correctly construct the full URI with query parameters
-      http.Response response = await http
+      debugPrint(
+          '====> API Call: $uri\nHeader: $_mainHeaders\nParams: $queryParams');
+      final response = await http
           .get(
             Uri.parse(uri).replace(queryParameters: queryParams),
             headers: _mainHeaders,
           )
-          .timeout(Duration(seconds: timeoutInSeconds));
-
-      // Use the handleResponse method from HandleResponse class
+          .timeout(const Duration(seconds: timeoutInSeconds));
       return HandleResponse().handleResponse(response, uri);
     } on TimeoutException {
-      return _handleError('The operation timed out');
+      return _handleError(operationTimedOut);
     } on SocketException {
-      return _handleError('No internet connection');
+      return _handleError(noInternetConnection);
     } catch (e) {
       debugPrint('Unexpected error occurred: $e');
-      return _handleError('An unexpected error occurred');
+      return _handleError(unexpectedError);
     }
   }
 
-  Future<Response> postData(String uri, dynamic body, {Map<String, String>? headers}) async {
+  Future<Response> postData(String uri, dynamic body,
+      {Map<String, String>? headers}) async {
     try {
       final fullUri = Uri.parse(uri);
-      debugPrint('====> API Call: $fullUri\nHeader: $_mainHeaders\nBody: $body');
-      http.Response response = await http.post(
+      debugPrint(
+          '====> API Call: $fullUri\nHeader: $_mainHeaders\nBody: $body');
+      final response = await http
+          .post(
         fullUri,
         body: jsonEncode(body),
         headers: headers ?? _mainHeaders,
-      ).timeout(Duration(seconds: timeoutInSeconds));
-
-      // Use the handleResponse method from HandleResponse class
+          )
+          .timeout(const Duration(seconds: timeoutInSeconds));
       return HandleResponse().handleResponse(response, uri);
     } on TimeoutException {
-      return _handleError('The operation timed out');
+      return _handleError(operationTimedOut);
     } on SocketException {
-      return _handleError('No internet connection');
+      return _handleError(noInternetConnection);
     } catch (e) {
       debugPrint('Unexpected error occurred: $e');
-      return _handleError('An unexpected error occurred');
+      return _handleError(unexpectedError);
     }
   }
 
@@ -103,11 +101,12 @@ class ApiClient extends GetxService {
     debugPrint('Error: $message');
     return const Response(
       statusCode: 1,
-      statusText: 'No internet connection',
+      statusText: noInternetConnection,
     );
   }
 
-  String getUserToken() {
-    return sharedPreferences.getString('token') ?? '';
+  String? getUserToken() {
+    return sharedPreferences.getString(tokenKey);
   }
 }
+
