@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:weather_app/theme/theme.dart';
 import 'package:weather_app/widgets/glassmorphism.dart';
 
 class CurrentWeatherDisplay extends StatelessWidget {
@@ -28,7 +27,7 @@ class CurrentWeatherDisplay extends StatelessWidget {
     return GlassMorphism(
       blur: 20.0,
       opacity: 0.1,
-      color: Colors.white,
+      color: Color.fromARGB(255, 106, 50, 50),
       borderRadius: BorderRadius.circular(12.0),
       child: Container(
         margin: const EdgeInsets.all(16.0),
@@ -45,7 +44,7 @@ class CurrentWeatherDisplay extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 25, 22, 22),
                     ),
                   ),
                 IconButton(
@@ -60,7 +59,7 @@ class CurrentWeatherDisplay extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Color.fromARGB(255, 63, 57, 57),
               ),
             ),
             const SizedBox(height: 8.0),
@@ -70,7 +69,7 @@ class CurrentWeatherDisplay extends StatelessWidget {
                   'https://openweathermap.org/img/wn/$icon.png',
                   width: 50,
                   height: 50,
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 162, 132, 132),
                   colorBlendMode: BlendMode.srcATop,
                 ),
                 const SizedBox(width: 16.0),
@@ -82,7 +81,7 @@ class CurrentWeatherDisplay extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 168, 143, 143),
                       ),
                     ),
                     Text(
@@ -90,7 +89,7 @@ class CurrentWeatherDisplay extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w400,
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 117, 96, 96),
                       ),
                     ),
                   ],
@@ -102,14 +101,14 @@ class CurrentWeatherDisplay extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.speed,
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 142, 108, 108),
                 ),
                 const SizedBox(width: 8.0),
                 Text(
                   'Wind Speed: $windSpeed m/s',
                   style: const TextStyle(
                     fontSize: 14.0,
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 116, 91, 91),
                   ),
                 ),
               ],
@@ -119,14 +118,14 @@ class CurrentWeatherDisplay extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.water_drop,
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 139, 113, 113),
                 ),
                 const SizedBox(width: 8.0),
                 Text(
                   'Humidity: $humidity%',
                   style: const TextStyle(
                     fontSize: 14.0,
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 133, 108, 108),
                   ),
                 ),
               ],

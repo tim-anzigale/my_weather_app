@@ -33,7 +33,7 @@ class DailyForecast extends StatelessWidget {
             return GlassMorphism(
               blur: 20.0,
               opacity: 0.1,
-              color: Colors.white,
+              color: Color.fromARGB(255, 151, 84, 84),
               borderRadius: BorderRadius.circular(12.0),
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -54,7 +54,7 @@ class DailyForecast extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 32, 29, 29),
                           ),
                         ),
                         const SizedBox(height: 8.0),
@@ -62,7 +62,7 @@ class DailyForecast extends StatelessWidget {
                           'High: $tempMax°C, Low: $tempMin°C',
                           style: const TextStyle(
                             fontSize: 16,
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 74, 69, 69),
                           ),
                         ),
                       ],

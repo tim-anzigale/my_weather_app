@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart'; // Import dotenv
-import 'ui/screens/weather_screen.dart';
 import 'ui/screens/splash_screen.dart';
 import 'theme/theme.dart';
 import 'helpers/get_di.dart' as di; // Import the dependency injection file

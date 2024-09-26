@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:weather_app/widgets/glassmorphism.dart';
 
 class HourlyForecast extends StatelessWidget {
@@ -29,7 +28,7 @@ class HourlyForecast extends StatelessWidget {
           return GlassMorphism(
             blur: 20.0,
             opacity: 0.1,
-            color: Colors.white,
+            color: Color.fromARGB(255, 91, 49, 49),
             borderRadius: BorderRadius.circular(12.0),
             child: Container(
               width: 140,
@@ -41,23 +40,23 @@ class HourlyForecast extends StatelessWidget {
                 children: [
                   Text(
                     '${time.format(context)}',
-                    style: const TextStyle(color: Colors.white, fontSize: 16.0),
+                    style: const TextStyle(color: Color.fromARGB(255, 84, 77, 77), fontSize: 16.0),
                   ),
                   const SizedBox(height: 8.0),
                   Image.network('https://openweathermap.org/img/wn/$icon.png'),
                   const SizedBox(height: 8.0),
-                  Text('$temp°C', style: const TextStyle(color: Colors.white)),
+                  Text('$temp°C', style: const TextStyle(color: Color.fromARGB(255, 73, 54, 54))),
                   const SizedBox(height: 4.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(
                         Icons.water_drop,
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 90, 71, 71),
                         size: 16.0,
                       ),
                       const SizedBox(width: 4.0),
-                      Text('$humidity%', style: const TextStyle(color: Colors.white)),
+                      Text('$humidity%', style: const TextStyle(color: Color.fromARGB(255, 78, 61, 61))),
                     ],
                   ),
                   const SizedBox(height: 4.0),
@@ -66,11 +65,11 @@ class HourlyForecast extends StatelessWidget {
                     children: [
                       const Icon(
                         Icons.air,
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 96, 80, 80),
                         size: 16.0,
                       ),
                       const SizedBox(width: 4.0),
-                      Text('$windSpeed m/s', style: const TextStyle(color: Colors.white)),
+                      Text('$windSpeed m/s', style: const TextStyle(color: Color.fromARGB(255, 78, 67, 67))),
                     ],
                   ),
                 ],
