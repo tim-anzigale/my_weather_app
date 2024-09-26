@@ -1,5 +1,7 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:weather_app/widgets/glassmorphism.dart';
 
 class DailyForecast extends StatelessWidget {
   final Map<String, dynamic> weatherData;
@@ -28,57 +30,44 @@ class DailyForecast extends StatelessWidget {
             final dt = DateTime.fromMillisecondsSinceEpoch(day['dt'] * 1000);
             final dayOfWeek = DateFormat('EEEE').format(dt);
 
-            return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              elevation: 5,
-              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            return GlassMorphism(
+              blur: 20.0,
+              opacity: 0.1,
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
               child: Container(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFF64B5F6), // Start color - sky blue
-                      Color(0xFF42A5F5), // End color - lighter blue
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    children: [
-                      Image.network(
-                        'https://openweathermap.org/img/wn/$icon.png',
-                        width: 50,
-                        height: 50,
-                      ),
-                      const SizedBox(width: 16.0),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            dayOfWeek,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Image.network(
+                      'https://openweathermap.org/img/wn/$icon.png',
+                      width: 50,
+                      height: 50,
+                    ),
+                    const SizedBox(width: 16.0),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          dayOfWeek,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'High: $tempMax°C, Low: $tempMin°C',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        Text(
+                          'High: $tempMax°C, Low: $tempMin°C',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             );

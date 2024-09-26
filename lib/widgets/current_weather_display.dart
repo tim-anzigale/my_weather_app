@@ -1,12 +1,15 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:weather_app/theme/theme.dart';
+import 'package:weather_app/widgets/glassmorphism.dart';
 
 class CurrentWeatherDisplay extends StatelessWidget {
   final Map<String, dynamic> weatherData;
   final String? cityName;
   final VoidCallback onRefresh;
 
-  const CurrentWeatherDisplay({super.key, 
+  const CurrentWeatherDisplay({
+    super.key,
     required this.weatherData,
     this.cityName,
     required this.onRefresh,
@@ -22,27 +25,13 @@ class CurrentWeatherDisplay extends StatelessWidget {
     final icon = weather['icon'];
     final description = weather['description'];
 
-    return Container(
-      margin: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        gradient: const LinearGradient(
-          colors: [
-            Color(0xFF64B5F6), //
-            Color(0xFF42A5F5), 
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF64B5F6).withOpacity(0.4),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Padding(
+    return GlassMorphism(
+      blur: 20.0,
+      opacity: 0.1,
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(12.0),
+      child: Container(
+        margin: const EdgeInsets.all(16.0),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +70,7 @@ class CurrentWeatherDisplay extends StatelessWidget {
                   'https://openweathermap.org/img/wn/$icon.png',
                   width: 50,
                   height: 50,
-                  color: Colors.white, //
+                  color: Colors.white,
                   colorBlendMode: BlendMode.srcATop,
                 ),
                 const SizedBox(width: 16.0),
