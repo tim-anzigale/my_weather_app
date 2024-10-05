@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/data/api/api_handler.dart';
 import 'package:weather_app/utils/environment.dart'; // Ensure the correct import path
 
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:161448088.
+
 class ApiClient extends GetxService {
   static const String contentType = 'Content-Type';
   static const String applicationJson = 'application/json';
