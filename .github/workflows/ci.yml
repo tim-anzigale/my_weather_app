@@ -1,6 +1,5 @@
 name: Flutter CI
 
-# Trigger this workflow on pushes and pull requests to the development branch
 on:
   push:
     branches:
@@ -17,11 +16,11 @@ jobs:
       # Checkout the code from the repository
       - uses: actions/checkout@v2
 
-      # Set up Flutter environment
+      # Set up the latest stable version of Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.4.1' 
+          channel: 'stable'
 
       # Fetch Flutter dependencies
       - name: Install dependencies
@@ -31,6 +30,6 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      # Run tests (optional but recommended)
+      # Run tests (optional)
       - name: Run tests
         run: flutter test
